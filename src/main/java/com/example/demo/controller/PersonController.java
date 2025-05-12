@@ -5,6 +5,8 @@ import com.example.demo.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/persons")
 public class PersonController {
@@ -18,5 +20,15 @@ public class PersonController {
         person.setName(name);
         person.setAge(age);
         return personRepository.save(person);
+    }
+
+    @GetMapping("/by-name")
+    public List<Person> getByName(@RequestParam String name) {
+        return personRepository.findByName(name);
+    }
+
+    @GetMapping("/older-than")
+    public List<Person> getOlderThan(@RequestParam int age) {
+        return personRepository.findByAgeGreaterThan(age);
     }
 }
